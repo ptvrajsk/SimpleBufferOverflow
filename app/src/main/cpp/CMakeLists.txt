@@ -20,13 +20,22 @@ add_library( # Sets the name of the library.
              native-lib.cpp )
 
 add_library( # Sets the name of the library.
-        LLVMFuzzerTestOneInput
+        libstrcpy
 
         # Sets the library as a shared library.
         SHARED
 
         # Provides a relative path to your source file(s).
-        LLVMFuzzerTestOneInput.cpp)
+        libstrcpy.cpp)
+
+add_library( # Sets the name of the library.
+        mytarget
+
+        # Sets the library as a shared library.
+        SHARED
+
+        # Provides a relative path to your source file(s).
+        my_target.cpp)
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by
@@ -55,11 +64,19 @@ target_compile_options(native-lib PUBLIC -fsanitize=address -fno-omit-frame-poin
 set_target_properties(native-lib PROPERTIES LINK_FLAGS -fsanitize=address)
 
 target_link_libraries( # Specifies the target library.
-                    LLVMFuzzerTestOneInput
+        libstrcpy
 
-                    # Links the target library to the log library
-                    # included in the NDK.
-                    ${log-lib} )
-target_compile_options(LLVMFuzzerTestOneInput PUBLIC -fsanitize=address -fno-omit-frame-pointer)
-set_target_properties(LLVMFuzzerTestOneInput PROPERTIES LINK_FLAGS -fsanitize=address)
+        # Links the target library to the log library
+        # included in the NDK.
+        ${log-lib} )
+target_compile_options(libstrcpy PUBLIC -fsanitize=address -fno-omit-frame-pointer)
+set_target_properties(libstrcpy PROPERTIES LINK_FLAGS -fsanitize=address)
 
+target_link_libraries( # Specifies the target library.
+        mytarget
+
+        # Links the target library to the log library
+        # included in the NDK.
+        ${log-lib} )
+target_compile_options(mytarget PUBLIC -fsanitize=address -fno-omit-frame-pointer)
+set_target_properties(mytarget PROPERTIES LINK_FLAGS -fsanitize=address)
