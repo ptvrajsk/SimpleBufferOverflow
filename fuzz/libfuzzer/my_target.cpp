@@ -3,7 +3,7 @@
 //
 
 #include <cstdlib>
-#include "libstrcpy.cpp"
+#include "../../app/src/main/cpp/libstrcpy.cpp"
 
 extern "C" int LLVMFuzzerTestOneInput(const char* Data, size_t size) {
     if (size >= 1) {
